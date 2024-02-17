@@ -2,7 +2,7 @@
 #include <SPI.h>
 
 // initialize the ShiftedLCD library with the number of the latch pin
-ShiftedLCD lcd(10);
+LiquidCrystal lcd(10);
 
 const int relay = 0;
 const int floaty_1 = A4;
