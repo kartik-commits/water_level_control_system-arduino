@@ -1,5 +1,6 @@
 #include <ShiftedLCD.h>
 #include <SPI.h>
+#include <EEPROM.h>
 
 // initialize the ShiftedLCD library with the number of the latch pin
 LiquidCrystal lcd(10);
@@ -39,7 +40,46 @@ void setup() {
 }
 
 void loop() {
-  if(digitalRead(floaty_3) == HIGH) {
+
+    if(digitalRead(ENTER)==LOW) {
+        delay(200);
+        lcd.setCursor(0, 0);
+        lcd.print("     VIEW     ");  
+    
+        do
+        {  
+            if(digitalRead(STOP)==LOW) 
+            {
+                delay(200);
+                lcd.setCursor(0, 0);
+                lcd.print("    SETTINGS    ");
+
+                do  
+                {
+                    if(digitalRead(ENTER)==LOW) {
+                        delay(200);
+                        lcd.setCursor(0, 0);
+                        lcd.print("   NO OF PUMPS.?   ");
+
+                        do // For swift exit
+                        {
+                            if(digitalRead(START)==LOW) {
+                                delay(200);
+                                return; 
+                            }
+                        } while(digitalRead(START)==HIGH);
+                
+                    }
+                }while(digitalRead(STOP)==HIGH);
+                
+            }
+        } while(digitalRead(ENTER)==HIGH);  
+    }
+
+
+      
+
+    else if(digitalRead(floaty_3) == HIGH) {
       if((digitalRead(floaty_1) == LOW) && (digitalRead(floaty_2) == HIGH)) {
         digitalWrite(relay_1, HIGH);
         digitalWrite(led_1, HIGH);
